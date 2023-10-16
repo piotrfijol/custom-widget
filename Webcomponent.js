@@ -1,35 +1,60 @@
-(function() {
+(function()  {
+    let tmpl = document.createElement('template');
+    tmpl.innerHTML = `
+      <style>
+      </style>
+    `;
 
-  widgetName = "excelwidget";
+    customElements.define('com-sap-sample-template', class WidgetTemplate extends HTMLElement {
 
-  let tmpl = document.createElement('template');
-  tmpl.innerHTML = `
-    <style>
-    </style>
-  `;
 
-  div = document.createElement('div');
-  div.slot = "content_" + widgetName;
+		constructor() {
+			super(); 
+			let shadowRoot = this.attachShadow({mode: "open"});
+			shadowRoot.appendChild(tmpl.content.cloneNode(true));
+		}
 
-    let div0 = document.createElement('div');
-    div0.innerHTML = '<?xml version="1.0"?><script id="oView_' + widgetName + '" name="oView_' + widgetName + '" type="sapui5/xmlview"><mvc:View height="100%" xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" controllerName="myView.Template"><f:SimpleForm editable="true"><f:content><Label text="Upload"></Label><VBox><u:FileUploader id="idfileUploader" width="100%" useMultipart="false" sendXHR="true" sameFilenameAllowed="true" buttonText="" fileType="XLSM" placeholder="" style="Emphasized" change="onValidate"></u:FileUploader></VBox></f:content></f:SimpleForm></mvc:View></script>';
-    _shadowRoot.appendChild(div0);
 
-    let div1 = document.createElement('div');
-    div1.innerHTML = '<?xml version="1.0"?><script id="myXMLFragment_' + widgetName + '" type="sapui5/fragment"><core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core"><SelectDialog title="Partner Number" class="sapUiPopupWithPadding"  items="{' + widgetName + '>/}" search="_handleValueHelpSearch"  confirm="_handleValueHelpClose"  cancel="_handleValueHelpClose"  multiSelect="true" showClearButton="true" rememberSelections="true"><StandardListItem icon="{' + widgetName + '>ProductPicUrl}" iconDensityAware="false" iconInset="false" title="{' + widgetName + '>partner}" description="{' + widgetName + '>partner}" /></SelectDialog></core:FragmentDefinition></script>';
-    _shadowRoot.appendChild(div1);
+        //Fired when the widget is added to the html DOM of the page
+        connectedCallback(){
+            this._firstConnection = true;
+            this.redraw();
+        }
 
-    let div2 = document.createElement('div');
-    div2.innerHTML = '<div id="ui5_content_' + widgetName + '" name="ui5_content_' + widgetName + '"><slot name="content_' + widgetName + '"></slot></div>';
-    _shadowRoot.appendChild(div2);
+         //Fired when the widget is removed from the html DOM of the page (e.g. by hide)
+        disconnectedCallback(){
+        
+        }
 
-    this.appendChild(div);
+         //When the custom widget is updated, the Custom Widget SDK framework executes this function first
+		onCustomWidgetBeforeUpdate(oChangedProperties) {
 
-    customElements.define('excelwidget', class ExcelWidget extends HTMLElement {
-      constructor () {
-        super();
-        let shadowRoot = this.attachShadow({mode: "open"});
-        shadowRoot.appendChild(tmpl.content.cloneNode(true));
-      }
+		}
+
+        //When the custom widget is updated, the Custom Widget SDK framework executes this function after the update
+		onCustomWidgetAfterUpdate(oChangedProperties) {
+            if (this._firstConnection){
+                this.redraw();
+            }
+        }
+        
+        //When the custom widget is removed from the canvas or the analytic application is closed
+        onCustomWidgetDestroy(){
+        }
+
+        //When the custom widget is resized on the canvas, the Custom Widget SDK framework executes the following JavaScript function call on the custom widget
+        // Commented out by default.  If it is enabled, SAP Analytics Cloud will track DOM size changes and call this callback as needed
+        //  If you don't need to react to resizes, you can save CPU by leaving it uncommented.
+        /*
+        onCustomWidgetResize(width, height){
+        
+        }
+        */
+
+        redraw(){
+        }
+    
+    
     });
-  )();
+        
+})();
