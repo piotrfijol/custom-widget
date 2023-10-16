@@ -16,6 +16,7 @@
               padding: 4px;
               box-sizing: border-box;
               border: 1px solid #bfbfbf;
+              background-color: orange;
           }
           input[type=checkbox] {
               width: inherit;
