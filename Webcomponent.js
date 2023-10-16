@@ -28,7 +28,7 @@
     customElements.define('excelwidget', class ExcelWidget extends HTMLElement {
       constructor () {
         super();
-        let shadowRoot - this.attachShadow({mode: "open"});
+        let shadowRoot = this.attachShadow({mode: "open"});
         shadowRoot.appendChild(tmpl.content.cloneNode(true));
       }
     });
