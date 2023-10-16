@@ -222,3 +222,5 @@ function loadthis(that, changedProperties) {
     }
   });
 }
+
+loadthis(this, {widgetName: "excelwidget"});
