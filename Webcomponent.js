@@ -1,7 +1,7 @@
-function loadthis(that, changedProperties) {
-  var that_ = that;
+(function() {
+  var that_ = this;
 
-  widgetName = changedProperties.widgetName;
+  widgetName = "excelwidget";
   if (typeof widgetName === "undefined") {
     widgetName = that._export_settings.title.split("|")[0];
   }
@@ -221,6 +221,4 @@ function loadthis(that, changedProperties) {
       oView.byId("idfileUploader").setEnabled(false);
     }
   });
-}
-
-loadthis(this, {widgetName: "excelwidget"});
+})();
