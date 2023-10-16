@@ -1,11 +1,7 @@
-(function() {
-  var that_ = this;
+(function(that) {
+  var that_ = that;
 
   widgetName = "excelwidget";
-  if (typeof widgetName === "undefined") {
-    widgetName = that._export_settings.title.split("|")[0];
-  }
-
 
   div = document.createElement('div');
   div.slot = "content_" + widgetName;
@@ -221,4 +217,4 @@
       oView.byId("idfileUploader").setEnabled(false);
     }
   });
-})();
+})(this);
