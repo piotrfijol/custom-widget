@@ -1,12 +1,11 @@
-(function(that) {
-  var that_ = that;
+(function() {
 
   widgetName = "excelwidget";
 
   div = document.createElement('div');
   div.slot = "content_" + widgetName;
 
-  if (that._firstConnection === 0) {
+  if (this._firstConnection === 0) {
     let div0 = document.createElement('div');
     div0.innerHTML = '<?xml version="1.0"?><script id="oView_' + widgetName + '" name="oView_' + widgetName + '" type="sapui5/xmlview"><mvc:View height="100%" xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" controllerName="myView.Template"><f:SimpleForm editable="true"><f:content><Label text="Upload"></Label><VBox><u:FileUploader id="idfileUploader" width="100%" useMultipart="false" sendXHR="true" sameFilenameAllowed="true" buttonText="" fileType="XLSM" placeholder="" style="Emphasized" change="onValidate"></u:FileUploader></VBox></f:content></f:SimpleForm></mvc:View></script>';
     _shadowRoot.appendChild(div0);
@@ -19,7 +18,7 @@
     div2.innerHTML = '<div id="ui5_content_' + widgetName + '" name="ui5_content_' + widgetName + '"><slot name="content_' + widgetName + '"></slot></div>';
     _shadowRoot.appendChild(div2);
 
-    that_.appendChild(div);
+    this.appendChild(div);
 
     var mapcanvas_divstr = _shadowRoot.getElementById('oView_' + widgetName);
     var mapcanvas_fragment_divstr = _shadowRoot.getElementById('myXMLFragment_' + widgetName);
@@ -31,7 +30,7 @@
     });
   }
 
-  that_._renderExportButton();
+  this._renderExportButton();
 
   sap.ui.getCore().attachInit(function() {
     "use strict";
@@ -63,11 +62,11 @@
       return Controller.extend("myView.Template", {
 
         onInit: function() {
-          console.log(that._export_settings.title);
-          console.log("widgetName:" + that.widgetName);
+          console.log(this._export_settings.title);
+          console.log("widgetName:" + this.widgetName);
 
-          if (that._firstConnection === 0) {
-            that._firstConnection = 1;
+          if (this._firstConnection === 0) {
+            this._firstConnection = 1;
           }
         },
 
@@ -163,11 +162,11 @@
 
                   _result = JSON.stringify(result_final);
 
-                  that._firePropertiesChanged();
+                  this._firePropertiesChanged();
                   this.settings = {};
                   this.settings.result = "";
 
-                  that.dispatchEvent(new CustomEvent("onStart", {
+                  this.dispatchEvent(new CustomEvent("onStart", {
                     detail: {
                       settings: this.settings
                     }
@@ -213,7 +212,7 @@
     });
 
     oView.placeAt(div);
-    if (that_._designMode) {
+    if (this._designMode) {
       oView.byId("idfileUploader").setEnabled(false);
     }
   });
